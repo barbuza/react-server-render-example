@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === "production") {
   var UglifyJSPlugin = require("webpack/lib/optimize/UglifyJsPlugin");
   var OccurenceOrderPlugin = require("webpack/lib/optimize/OccurenceOrderPlugin");
   plugins.push(new OccurenceOrderPlugin(true));
-  // plugins.push(new UglifyJSPlugin());
+  plugins.push(new UglifyJSPlugin());
 }
 
 module.exports = {

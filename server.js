@@ -24,7 +24,7 @@ app.use(morgan("short"));
 
 var commonBundlePath = "/common.bundle.js";
 var entryBundlePath = "/entry.bundle.js";
-if (process.env.NODE_ENV == "production") {
+if (process.env.NODE_ENV === "production") {
   var bundleHash = crypto.createHash("sha1");
   bundleHash.update(fs.readFileSync("static" + commonBundlePath));
   commonBundlePath += "?" + bundleHash.digest("hex");
@@ -35,19 +35,30 @@ if (process.env.NODE_ENV == "production") {
 }
 
 app.get("/riak/*", function(req, res, next) {
-  superagent
-    .get("http://127.0.0.1:8098" + req.path)
-    .end(function(response) {
-      var headers = {
-        "Content-Type": response.type,
-        "Content-Length": response.text.length
-      };
-      if (response.headers.etag) {
-        headers["ETag"] = response.headers.etag;
-      }
-      res.writeHead(response.statusCode, headers);
-      res.end(response.text);
-    });
+  if (process.env.NODE_ENV === "production") {
+    superagent
+      .get("http://127.0.0.1:8098" + req.path)
+      .end(function(response) {
+        var headers = {
+          "Content-Type": response.type,
+          "Content-Length": response.text.length
+        };
+        if (response.headers.etag) {
+          headers["ETag"] = response.headers.etag;
+        }
+        res.writeHead(response.statusCode, headers);
+        res.end(response.text);
+      });    
+  } else {
+    if (req.path === "/riak/test/index") {
+      res.send({title: "index"});
+    } else if (req.path === "/riak/test/about") {
+      res.send({title: "about"});
+    } else {
+      res.writeHead(404, {});
+      res.end("404");
+    }
+  }
 });
 
 app.get("/*", function(req, res, next) {
