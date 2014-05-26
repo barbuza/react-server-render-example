@@ -1,0 +1,24 @@
+{
+  "name": "node-render",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "envify-loader": "^0.1.0",
+    "express": "^4.2.0",
+    "jsx-loader": "^0.10.2",
+    "morgan": "^1.0.1",
+    "node-jsx": "^0.10.0",
+    "react": "^0.10.0",
+    "superagent": "^0.18.0",
+    "supervisor": "^0.6.0",
+    "webpack": "^1.1.10",
+    "webpack-dev-middleware": "^1.0.5",
+    "es6-promise": "~1.0.0"
+  }
+}
