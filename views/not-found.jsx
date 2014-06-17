@@ -4,7 +4,7 @@ var React = require("react");
 
 var NotFound = React.createClass({
   render: function() {
-    return <h1>page not found</h1>;
+    return <h1 id="error404">404</h1>;
   }
 });
 
