@@ -3,7 +3,7 @@ var Promise = require("es6-promise").Promise;
 var browserCache = {};
 
 module.exports = function baseAction(pageType, useCache, generator) {
-  return function() {
+  return function(pathData) {
     
     if (typeof window !== "undefined" && useCache && browserCache[pageType]) {
       return new Promise(function(resolve, reject) {
@@ -26,7 +26,7 @@ module.exports = function baseAction(pageType, useCache, generator) {
           pageType: pageType,
           pageData: pageData
         });
-      }, reject);
+      }, reject, pathData);
     });
 
   }

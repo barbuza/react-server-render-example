@@ -1,18 +1,35 @@
-
+var XRegExp = require("xregexp").XRegExp;
 var superagent = require("superagent");
 var Promise = require("es6-promise").Promise;
 
-var routes = require("./routes");
 var Const = require("./const");
 var logging = require("./logging");
 
+var Route = function(pattern, handler) {
+  this.source = pattern;
+  this.pattern = XRegExp("^" + pattern + "$");
+  this.handler = handler;
+};
+
+Route.prototype.match = function(path) {
+  var result = XRegExp.exec(path, this.pattern);
+  return result;
+};
+
+Route.prototype.reverse = function(params) {
+  var path = this.source;
+  for (var key in params) {
+    if (params.hasOwnProperty(key)) {
+      path = path.replace(new RegExp("\\(\\?<" + key + ">[^)]+\\)"), params[key])
+    }
+  }
+  return path;
+};
 
 var Router = function() {
   this.path = undefined;
-};
-
-Router.prototype.setPath = function(path) {
-  this.path = path;
+  this.routes = [];
+  this.namedRoutes = {};
 };
 
 Router.prototype.getPath = function() {
@@ -23,7 +40,7 @@ Router.prototype.onStateChange = function(ev) {
   if (window.location.pathname === this.path) return;
 
   var path = window.location.pathname;
-  this.setPath(path);
+  this.path = path;
 
   this.app.setProps({
     locked: true
@@ -49,14 +66,28 @@ Router.prototype.attach = function(app) {
   window.addEventListener("popstate", this.onStateChange.bind(this));
 };
 
-Router.prototype.getProps = function(path) {
-  if (path === routes.index()) return this.indexAction();
-  if (path === routes.about()) return this.aboutAction();
-  return this.notFoundAction();
+Router.prototype.addRoute = function(name, pattern, handler) {
+  var route = new Route(pattern, handler);
+  this.routes.unshift(route);
+  this.namedRoutes[name] = route;
 };
 
-Router.prototype.indexAction = require("./actions/index");
-Router.prototype.aboutAction = require("./actions/about");
-Router.prototype.notFoundAction = require("./actions/not-found");
+Router.prototype.getProps = function(path) {
+  var result;
+  for (var i = this.routes.length - 1; i >= 0; i--) {
+    result = this.routes[i].match(path);
+    if (result) {
+      return this.routes[i].handler(result);
+      break;
+    }
+  };
+  return new Promise(function(resolve) {
+    resolve(require("./actions/not-found")());
+  });
+};
 
-module.exports = new Router;
+Router.prototype.reverse = function(name, params) {
+  return this.namedRoutes[name].reverse(params);
+};
+
+module.exports = Router;

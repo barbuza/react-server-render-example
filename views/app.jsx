@@ -8,6 +8,7 @@ var logging = require("../logging");
 
 var Index = require("./index");
 var About = require("./about");
+var Page = require("./page");
 var NotFound = require("./not-found");
 var Link = require("./link");
 
@@ -33,16 +34,19 @@ var App = React.createClass({
       locked: this.props.locked
     }) + ";";
 
-    var Page;
+    var CurrentPage;
     switch (this.props.pageType) {
       case Const.INDEX:
-        Page = Index;
+        CurrentPage = Index;
         break;
       case Const.ABOUT:
-        Page = About;
+        CurrentPage = About;
+        break;
+      case Const.PAGE:
+        CurrentPage = Page;
         break;
       default:
-        Page = NotFound;
+        CurrentPage = NotFound;
     }
 
     return (
@@ -54,15 +58,19 @@ var App = React.createClass({
         <body>
           <header>
             <nav>
-              <Link href={routes.index()}>index</Link>
+              <Link href={routes.reverse("index")}>index</Link>
               &nbsp;
-              <Link href={routes.about()}>about</Link>
+              <Link href={routes.reverse("about")}>about</Link>
+              &nbsp;
+              <Link href={routes.reverse("page", {name: "1"})}>page 1</Link>
+              &nbsp;
+              <Link href={routes.reverse("page", {name: "2"})}>page 2</Link>
               &nbsp;
               <Link href="/broken-link">broken link</Link>
             </nav>
           </header>
           <section id="workspace">
-            <Page data={this.props.pageData} />
+            <CurrentPage data={this.props.pageData} />
           </section>
           <footer></footer>
           <script src={this.props.commonBundlePath} />

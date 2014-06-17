@@ -11,7 +11,7 @@ require("node-jsx").install({extension: ".jsx", harmony: true});
 
 var app = express();
 var ReactApp = require("./views/app");
-var ReactRouter = require("./router");
+var ReactRouter = require("./routes");
 var Const = require("./const");
 
 if (process.env.NODE_ENV != "production") {
@@ -40,8 +40,7 @@ app.get("/riak/*", function(req, res, next) {
       .get("http://127.0.0.1:8098" + req.path)
       .end(function(response) {
         var headers = {
-          "Content-Type": response.type,
-          "Content-Length": response.text.length
+          "Content-Type": response.type
         };
         if (response.headers.etag) {
           headers["ETag"] = response.headers.etag;
@@ -74,8 +73,7 @@ app.get("/*", function(req, res, next) {
     var html = "<!doctype html>\n" + React.renderComponentToString(component);
     var statusCode = data.pageType === Const.NOT_FOUND ? 404 : 200;
     res.writeHead(statusCode, {
-      "Content-Type": "text/html",
-      "Content-Length": html.length + 2
+      "Content-Type": "text/html"
     });
     res.end(html);
   }, next);

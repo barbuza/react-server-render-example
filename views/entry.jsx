@@ -8,6 +8,6 @@ var logging = require("../logging");
 logging.info("app starting");
 
 var App = require("./app");
-var router = require("../router");
+var routes = require("../routes");
 var app = React.renderComponent(App(window.appProps), document);
-router.attach(app);
+routes.attach(app);
