@@ -5,6 +5,8 @@
   left: 0;
   right: 0;
   bottom: 0;
+  opacity: 0;
+  transition: opacity 0.5s;
 }
 
 .popupInner {
@@ -16,6 +18,24 @@
   background: #fff;
   width: 500px;
   height: 200px;
+  transition: opacity 0.5s, transform 0.3s;
+  transform: translateY(-100%);
+}
+
+.popupVisible {
+  opacity: 1;
+  .popupInner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popupDispose {
+  opacity: 0;
+  .popupInner {
+    opacity: 0;
+    transform: translateY(100%);
+  }
 }
 
 .popupClose {

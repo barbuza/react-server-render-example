@@ -19,7 +19,7 @@ var Element = React.createClass({
     };
   },
   titleClickHandler: function() {
-    dispatch.emit("showPopup", Popup());
+    dispatch.emit("showPopup", <Popup />);
   },
   appendText: function() {
     this.setState({
