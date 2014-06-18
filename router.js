@@ -1,8 +1,6 @@
 var XRegExp = require("xregexp").XRegExp;
-var superagent = require("superagent");
 var Promise = require("es6-promise").Promise;
 
-var Const = require("./const");
 var logging = require("./logging");
 var dispatch = require("./dispatch");
 
@@ -21,7 +19,7 @@ Route.prototype.reverse = function(params) {
   var path = this.source;
   for (var key in params) {
     if (params.hasOwnProperty(key)) {
-      path = path.replace(new RegExp("\\(\\?<" + key + ">[^)]+\\)"), params[key])
+      path = path.replace(new RegExp("\\(\\?<" + key + ">[^)]+\\)"), params[key]);
     }
   }
   return path;
@@ -94,9 +92,8 @@ Router.prototype.getProps = function(path) {
     result = this.routes[i].match(path);
     if (result) {
       return this.routes[i].handler(result);
-      break;
     }
-  };
+  }
   return new Promise(function(resolve) {
     resolve(require("./actions/not-found")());
   });

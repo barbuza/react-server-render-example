@@ -10,7 +10,7 @@ module.exports = function baseAction(pageType, useCache, generator) {
     if (pathData) {
       for (var i = pathData.length - 1; i >= 0; i--) {
         cacheKey += "|" + pathData[i];
-      };      
+      }
     }
 
     if (typeof window !== "undefined" && useCache && browserCache[cacheKey]) {
@@ -39,5 +39,5 @@ module.exports = function baseAction(pageType, useCache, generator) {
       }, reject, pathData);
     });
 
-  }
+  };
 };

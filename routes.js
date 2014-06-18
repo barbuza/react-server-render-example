@@ -1,5 +1,5 @@
 var Router = require("./router");
-var router = new Router;
+var router = new Router();
 module.exports = router;
 
 router.addRoute("grid", "/", require("./actions/grid"));

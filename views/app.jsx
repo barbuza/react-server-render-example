@@ -5,7 +5,6 @@ var Const = require("../const");
 var Grid = require("./grid");
 var Element = require("./element");
 var NotFound = require("./not-found");
-var Link = require("./link");
 
 var Counter = React.createClass({
 

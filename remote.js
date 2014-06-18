@@ -35,4 +35,4 @@ if (typeof window === "undefined") {
 
 }
 
-module.exports = new Remote;
+module.exports = new Remote();
