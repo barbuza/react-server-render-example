@@ -13,24 +13,25 @@ var Element = React.createClass({
       desc: React.PropTypes.string.isRequired
     }).isRequired
   },
-  getDefaultProps: function() {
+  getInitialState: function() {
     return {
-      data: {
-        id: 0,
-        title: "fake",
-        image: "about://blank"
-      }
+      desc: this.props.data.desc
     };
   },
   titleClickHandler: function() {
     dispatch.emit("showPopup", Popup());
+  },
+  appendText: function() {
+    this.setState({
+      desc: this.state.desc + " foo"
+    });
   },
   render: function() {
     return (
       <div className="element">
         <h1 onClick={this.titleClickHandler}>{this.props.data.title}</h1>
         <img src={this.props.data.image} />
-        <div className="elementDescription">{this.props.data.desc}</div>
+        <div onClick={this.appendText} className="elementDescription">{this.state.desc}</div>
       </div>
     );
   }

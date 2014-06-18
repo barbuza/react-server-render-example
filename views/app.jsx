@@ -7,6 +7,31 @@ var Element = require("./element");
 var NotFound = require("./not-found");
 var Link = require("./link");
 
+var Counter = React.createClass({
+
+  getInitialState: function() {
+    return {
+      value: 1
+    };
+  },
+
+  toggle: function() {
+    this.setState({
+      value: this.state.value + 1
+    });
+  },
+
+  render: function() {
+    return (
+      <span style={{marginLeft: 20, cursor: "pointer"}}
+            onClick={this.toggle}>
+        {this.state.value}
+      </span>
+    );
+  }
+
+});
+
 var App = React.createClass({
 
   propTypes: {
@@ -52,7 +77,10 @@ var App = React.createClass({
           <link href={this.props.cssPath} type="text/css" rel="stylesheet" />
         </head>
         <body>
-          <header>react server render demo</header>
+          <header>
+            react server render demo
+            <Counter />
+          </header>
           <section id="workspace">
             <Page data={this.props.pageData} />
           </section>
