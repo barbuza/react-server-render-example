@@ -19,6 +19,10 @@ var PopupBase = React.createClass({
     };
   },
 
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return nextState.visible !== this.state.visible || nextState.dispose !== this.state.dispose;
+  },
+
   componentDidMount: function() {
     setTimeout(this.showPopup, 0);
     var closeBtn = this.getDOMNode().querySelector("[data-role='close']");
