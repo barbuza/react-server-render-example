@@ -9,7 +9,7 @@ clean:
 style:
 	# compiling styles
 	NODE_PATH=${node_path} ${node_path}/.bin/stylus -u nib --import styles/helpers -o static styles/app.styl
-	NODE_PATH=${node_path} ${node_path}/.bin/autoprefixer static/app.css
+	NODE_PATH=${node_path} ${node_path}/.bin/autoprefixer -b "last 2 versions" static/app.css
 
 style_min: style
 	# compressing styles
