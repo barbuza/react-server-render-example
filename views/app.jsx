@@ -16,7 +16,8 @@ var App = React.createClass({
     cssPath: React.PropTypes.string.isRequired,
     pageType: React.PropTypes.string.isRequired,
     pageData: React.PropTypes.object.isRequired,
-    locked: React.PropTypes.bool.isRequired
+    locked: React.PropTypes.bool.isRequired,
+    activePopup: React.PropTypes.renderable
   },
 
   render: function() {
@@ -56,6 +57,7 @@ var App = React.createClass({
             <Page data={this.props.pageData} />
           </section>
           <footer></footer>
+          {this.props.activePopup ? this.props.activePopup : null}
           <script src={this.props.commonBundlePath} />
           <script dangerouslySetInnerHTML={{__html: injectConfig}} />
           <script src={this.props.entryBundlePath} />

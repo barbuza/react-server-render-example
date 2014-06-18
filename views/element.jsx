@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
 var React = require("react");
+var dispatch = require("../dispatch");
+var Popup = require("./popup");
 
 var Element = React.createClass({
   propTypes: {
@@ -20,10 +22,13 @@ var Element = React.createClass({
       }
     };
   },
+  titleClickHandler: function() {
+    dispatch.emit("showPopup", Popup());
+  },
   render: function() {
     return (
       <div className="element">
-        <h1>{this.props.data.title}</h1>
+        <h1 onClick={this.titleClickHandler}>{this.props.data.title}</h1>
         <img src={this.props.data.image} />
         <div className="elementDescription">{this.props.data.desc}</div>
       </div>

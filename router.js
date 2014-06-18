@@ -4,6 +4,7 @@ var Promise = require("es6-promise").Promise;
 
 var Const = require("./const");
 var logging = require("./logging");
+var dispatch = require("./dispatch");
 
 var Route = function(pattern, handler) {
   this.source = pattern;
@@ -51,7 +52,8 @@ Router.prototype.onStateChange = function(ev) {
       this.app.setProps({
         pageType: state.pageType,
         pageData: state.pageData,
-        locked: false
+        locked: false,
+        activePopup: null
       });
     }.bind(this),
     function(err) {
@@ -64,6 +66,20 @@ Router.prototype.onStateChange = function(ev) {
 Router.prototype.attach = function(app) {
   this.app = app;
   window.addEventListener("popstate", this.onStateChange.bind(this));
+  dispatch.on("showPopup", this.showPopup.bind(this));
+  dispatch.on("hidePopup", this.hidePopup.bind(this));
+};
+
+Router.prototype.showPopup = function(popup) {
+  this.app.setProps({
+    activePopup: popup
+  });
+};
+
+Router.prototype.hidePopup = function() {
+  this.app.setProps({
+    activePopup: null
+  });
 };
 
 Router.prototype.addRoute = function(name, pattern, handler) {
