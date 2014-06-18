@@ -81,7 +81,7 @@ var App = React.createClass({
             <Counter />
           </header>
           <section id="workspace">
-            <Page data={this.props.pageData} />
+            {Page(this.props.pageData)}
           </section>
           <footer></footer>
           {this.props.activePopup ? this.props.activePopup : null}

@@ -6,18 +6,16 @@ var routes = require("../routes");
 
 var Grid = React.createClass({
   propTypes: {
-    data: React.PropTypes.shape({
-      items: React.PropTypes.arrayOf(
-        React.PropTypes.shape({
-          id: React.PropTypes.number.isRequired,
-          title: React.PropTypes.string.isRequired,
-          image: React.PropTypes.string.isRequired
-        })
-      ).isRequired
-    }).isRequired
+    items: React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        id: React.PropTypes.number.isRequired,
+        title: React.PropTypes.string.isRequired,
+        image: React.PropTypes.string.isRequired
+      })
+    ).isRequired
   },
   render: function() {
-    var items = this.props.data.items.map(function(item) {
+    var items = this.props.items.map(function(item) {
       return (
         <Link href={routes.reverse("element", {id: item.id})}
               className="gridItem" key={item.id}>
