@@ -1,0 +1,51 @@
+.cmpPopupOverlay {
+  background: rgba(0,0,0,0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cmpPopupVisible {
+  opacity: 1;
+}
+
+.cmpPopupDispose {
+  opacity: 0;
+}
+
+$cmpPopupInner {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.2s, transform 0.3s;
+  background: #fff;
+}
+
+$cmpPopupInnerVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+$cmpPopupInnerDispose {
+  transform: translateY(100%);
+}
+
+popup(width, height) {
+  width: width;
+  height: height;
+  min-width: width;
+  min-height: height;
+  @extends $cmpPopupInner;
+  .cmpPopupVisible & {
+    @extends $cmpPopupInnerVisible;
+  }
+  .cmpPopupDispose & {
+    @extends $cmpPopupInnerDispose;
+  }
+}

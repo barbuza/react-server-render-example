@@ -1,46 +1,9 @@
 .popup {
-  background: rgba(0,0,0,0.3);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-.popupInner {
-  position: absolute;
-  left: 50%;
-  margin-left: -250px;
-  top: 50%;
-  margin-top: -100px;
-  background: #fff;
-  width: 500px;
-  height: 200px;
-  transition: opacity 0.5s, transform 0.3s;
-  transform: translateY(-100%);
-}
-
-.popupVisible {
-  opacity: 1;
-  .popupInner {
-    opacity: 1;
-    transform: translateY(0);
+  .close {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px
   }
-}
-
-.popupDispose {
-  opacity: 0;
-  .popupInner {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-}
-
-.popupClose {
-  cursor: pointer;
-  position: absolute;
-  top: 5px;
-  right: 5px;
+  popup(500px, 200px);
 }
