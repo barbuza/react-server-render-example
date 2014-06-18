@@ -29,3 +29,7 @@ bundle: clean
 prod: bundle style_min
 	# starting prod server
 	NODE_ENV=production NODE_PATH=${node_path} node --harmony server.js
+
+lint:
+	-make bundle | grep "Side effects" | grep -v "react/lib"
+	NODE_PATH=${node_path} ${node_path}/.bin/jsxhint *.js views/*.jsx components/*.jsx actions/*.js
