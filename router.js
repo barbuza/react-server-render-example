@@ -1,6 +1,4 @@
 var XRegExp = require("xregexp").XRegExp;
-var Promise = require("es6-promise").Promise;
-
 var logging = require("./logging");
 var dispatch = require("./dispatch");
 
@@ -86,6 +84,10 @@ Router.prototype.addRoute = function(name, pattern, handler) {
   this.namedRoutes[name] = route;
 };
 
+Router.prototype.set404Route = function(handler) {
+  this.handler404 = handler;
+};
+
 Router.prototype.getProps = function(path) {
   var result;
   for (var i = this.routes.length - 1; i >= 0; i--) {
@@ -94,9 +96,7 @@ Router.prototype.getProps = function(path) {
       return this.routes[i].handler(result);
     }
   }
-  return new Promise(function(resolve) {
-    resolve(require("./actions/not-found")());
-  });
+  return this.handler404();
 };
 
 Router.prototype.reverse = function(name, params) {
