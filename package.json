@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "0.10.x"
+    "node": "0.10.28",
+    "npm": "1.4.15"
   },
   "dependencies": {
     "autoprefixer": "^1.2.0",
