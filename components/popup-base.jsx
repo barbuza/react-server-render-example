@@ -51,9 +51,7 @@ var PopupBase = React.createClass({
       visible: false,
       dispose: true
     });
-    setTimeout(function() {
-      dispatch.emit("hidePopup");
-    }, 500);
+    setTimeout(() => dispatch.emit("hidePopup"), 500);
   },
 
   showPopup: function() {

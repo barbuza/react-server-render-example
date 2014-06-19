@@ -85,6 +85,7 @@ var App = React.createClass({
         <head>
           <meta charSet="utf-8" />
           <title>node render</title>
+          <link href="http://fonts.googleapis.com/css?family=Open+Sans:400&subset=latin,cyrillic" rel="stylesheet" type="text/css" />
           <link href={this.props.cssPath} type="text/css" rel="stylesheet" />
         </head>
         <body>
