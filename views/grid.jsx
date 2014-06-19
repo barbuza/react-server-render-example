@@ -5,6 +5,7 @@ var Link = require("./link");
 var routes = require("../routes");
 var PropTypes = React.PropTypes;
 var cx = require("react/lib/cx");
+var shallowEqual = require("react/lib/shallowEqual");
 
 var itemShape = {
   id: PropTypes.number.isRequired,
@@ -38,8 +39,10 @@ var RateHelper = React.createClass({
         gridItemRateStar: !active,
         gridItemRateStarActive: active
       });
-      stars.push(<span onMouseEnter={this.starMouseEnter.bind(this, i)} onMouseLeave={this.starMouseLeave}
-                       className={classes} key={i} />);
+      stars.push(<span onMouseEnter={this.starMouseEnter.bind(this, i)}
+                       onMouseLeave={this.starMouseLeave}
+                       className={classes}
+                       key={i} />);
     }
     return <div className="gridItemRate">{stars}</div>;
   }
@@ -80,6 +83,9 @@ var GridItem = React.createClass({
     if (this.state.hideTimeout) {
       clearTimeout(this.state.hideTimeout);
     }
+  },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return !shallowEqual(this.props, nextProps) || this.state.showRateHelper !== nextState.showRateHelper;
   },
   render: function() {
     var rateHelper = this.state.showRateHelper ? <RateHelper /> : null;
