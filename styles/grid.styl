@@ -50,10 +50,20 @@
   width: 300px;
   text-align: center;
   z-index: 1;
-  span {
-    padding: 0 2px;
-    font-size: 20px;
-  }
+}
+
+.gridItemRateStarActive, .gridItemRateStar {
+  padding: 0 2px;
+  font-size: 20px;
+}
+
+.gridItemRateStar:after {
+  content: "☆";
+  opacity: 0.8;
+}
+
+.gridItemRateStarActive:after {
+  content: "★";
 }
 
 .element {

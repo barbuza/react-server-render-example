@@ -30,12 +30,17 @@ var RateHelper = React.createClass({
   },
   render: function() {
     var stars = [];
+    var active;
+    var classes;
     for (var i = 0; i < 10; i++) {
+      active = this.state.value > i;
+      classes = cx({
+        gridItemRateStar: !active,
+        gridItemRateStarActive: active
+      });
       stars.push(<span onMouseEnter={this.starMouseEnter.bind(this, i)} onMouseLeave={this.starMouseLeave}
-                       style={{opacity: this.state.value > i ? 1 : 0.8}} key={i}>
-                    {this.state.value > i ? "★" : "☆"}
-                </span>);
-    };
+                       className={classes} key={i} />);
+    }
     return <div className="gridItemRate">{stars}</div>;
   }
 });
@@ -48,7 +53,10 @@ var GridItem = React.createClass({
     };
   },
   onMouseLeave: function() {
-    setTimeout(this.hideRateHelper, 300);
+    var hideTimeout = setTimeout(this.hideRateHelper, 300);
+    this.setState({
+      hideTimeout: hideTimeout
+    });
   },
   hideRateHelper: function() {
     if (this.isMounted()) {
@@ -61,6 +69,17 @@ var GridItem = React.createClass({
     this.setState({
       showRateHelper: true
     });
+    if (this.state.hideTimeout) {
+      clearTimeout(this.state.hideTimeout);
+      this.setState({
+        hideTimeout: null
+      });
+    }
+  },
+  componentWillUnmount: function() {
+    if (this.state.hideTimeout) {
+      clearTimeout(this.state.hideTimeout);
+    }
   },
   render: function() {
     var rateHelper = this.state.showRateHelper ? <RateHelper /> : null;
