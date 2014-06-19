@@ -1,4 +1,5 @@
 /static/*.bundle.js
 /static/*.css
+/static/*.bundle.js.map
 /node_modules
 .DS_Store

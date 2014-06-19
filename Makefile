@@ -3,8 +3,7 @@ node_path := ${pwd}/node_modules
 bin_path := ${node_path}/.bin
 
 clean:
-	@rm -f static/*.bundle.js
-	@rm -f static/*.css
+	@rm -f static/*.bundle.js static/*.css static/*.bundle.js.map
 
 prod_style:
 	# compiling production styles
@@ -16,7 +15,7 @@ dev_style:
 
 dev_bundle:
 	# building development bundle
-	@NODE_ENV=development ${bin_path}/webpack --hide-modules --progress -c
+	@NODE_ENV=development ${bin_path}/webpack -d --hide-modules --progress -c
 
 prod_bundle:
 	# building production bundle
