@@ -18,4 +18,4 @@ var NetworkErrorPopup = React.createClass({
 module.exports = function() {
   logging.warn("show network error popup");
   dispatch.emit("showPopup", NetworkErrorPopup());
-}
+};

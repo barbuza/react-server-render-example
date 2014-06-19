@@ -1,5 +1,4 @@
 var XRegExp = require("xregexp").XRegExp;
-var logging = require("./logging");
 var dispatch = require("./dispatch");
 
 var Route = function(pattern, handler) {

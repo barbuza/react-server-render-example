@@ -4,6 +4,7 @@ var React = require("react");
 var Const = require("../const");
 var Grid = require("./grid");
 var Element = require("./element");
+var Preloader = require("../components/preloader");
 var NotFound = require("./not-found");
 
 var PropTypes = React.PropTypes;
@@ -70,6 +71,15 @@ var App = React.createClass({
         Page = NotFound;
     }
 
+    var lock = null;
+    if (this.props.locked) {
+      lock = (
+        <div id="locked-app">
+          <Preloader />
+        </div>
+      );
+    }
+
     return (
       <html>
         <head>
@@ -87,6 +97,7 @@ var App = React.createClass({
           </section>
           <footer></footer>
           {this.props.activePopup ? this.props.activePopup : null}
+          {lock}
           <script src={this.props.commonBundlePath} />
           <script dangerouslySetInnerHTML={{__html: injectConfig}} />
           <script src={this.props.entryBundlePath} />
