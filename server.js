@@ -17,7 +17,7 @@ if (process.env.NODE_ENV != "production") {
   app.use(webpackDevMiddleware(webpack(require("./webpack.config"))));
 }
 
-app.use(express.static("static"));
+app.use(express.static(__dirname + "/static"));
 
 app.use(morgan("short"));
 
@@ -25,11 +25,11 @@ var commonBundlePath = "/common.bundle.js";
 var entryBundlePath = "/entry.bundle.js";
 if (process.env.NODE_ENV === "production") {
   var bundleHash = crypto.createHash("sha1");
-  bundleHash.update(fs.readFileSync("static" + commonBundlePath));
+  bundleHash.update(fs.readFileSync(__dirname + "/static" + commonBundlePath));
   commonBundlePath += "?" + bundleHash.digest("hex");
 
   bundleHash = crypto.createHash("sha1");
-  bundleHash.update(fs.readFileSync("static" + entryBundlePath));
+  bundleHash.update(fs.readFileSync(__dirname + "/static" + entryBundlePath));
   entryBundlePath += "?" + bundleHash.digest("hex");
 }
 
@@ -37,7 +37,7 @@ var cssPath = "/app.css";
 if (process.env.NODE_ENV === "production") {
   cssPath = "/app.min.css";
   var cssBundleHash = crypto.createHash("sha1");
-  cssBundleHash.update(fs.readFileSync("static" + cssPath));
+  cssBundleHash.update(fs.readFileSync(__dirname + "/static" + cssPath));
   cssPath += "?" + cssBundleHash.digest("hex");
 }
 
