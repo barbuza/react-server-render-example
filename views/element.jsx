@@ -3,13 +3,14 @@
 var React = require("react");
 var dispatch = require("../dispatch");
 var Popup = require("./popup");
+var PropTypes = React.PropTypes;
 
 var Element = React.createClass({
   propTypes: {
-    id: React.PropTypes.number.isRequired,
-    title: React.PropTypes.string.isRequired,
-    image: React.PropTypes.string.isRequired,
-    desc: React.PropTypes.string.isRequired
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    desc: PropTypes.string.isRequired
   },
   getInitialState: function() {
     return {

@@ -1,11 +1,12 @@
 /** @jsx React.DOM */
 
 var React = require("react");
+var PropTypes = React.PropTypes;
 
 var Link = React.createClass({
   propTypes: {
-    href: React.PropTypes.string.isRequired,
-    children: React.PropTypes.renderable
+    href: PropTypes.string.isRequired,
+    children: PropTypes.renderable
   },
   onClick: function(e) {
     if (typeof history.pushState === "function") {

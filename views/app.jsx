@@ -6,6 +6,8 @@ var Grid = require("./grid");
 var Element = require("./element");
 var NotFound = require("./not-found");
 
+var PropTypes = React.PropTypes;
+
 var Counter = React.createClass({
 
   getInitialState: function() {
@@ -34,14 +36,14 @@ var Counter = React.createClass({
 var App = React.createClass({
 
   propTypes: {
-    path: React.PropTypes.string.isRequired,
-    entryBundlePath: React.PropTypes.string.isRequired,
-    commonBundlePath: React.PropTypes.string.isRequired,
-    cssPath: React.PropTypes.string.isRequired,
-    pageType: React.PropTypes.string.isRequired,
-    pageData: React.PropTypes.object.isRequired,
-    locked: React.PropTypes.bool.isRequired,
-    activePopup: React.PropTypes.renderable
+    path: PropTypes.string.isRequired,
+    entryBundlePath: PropTypes.string.isRequired,
+    commonBundlePath: PropTypes.string.isRequired,
+    cssPath: PropTypes.string.isRequired,
+    pageType: PropTypes.string.isRequired,
+    pageData: PropTypes.object.isRequired,
+    locked: PropTypes.bool.isRequired,
+    activePopup: PropTypes.renderable
   },
 
   render: function() {

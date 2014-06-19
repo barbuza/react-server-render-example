@@ -14,7 +14,11 @@ if (typeof window === "undefined") {
       superagent
         .get("http://127.0.0.1:8080" + uri)
         .end(function(response) {
-          resolve(response.body);
+          if (response.ok) {
+            resolve(response.body);
+          } else {
+            reject();
+          }
         });
     });
   };
@@ -28,7 +32,11 @@ if (typeof window === "undefined") {
       superagent
         .get(uri)
         .end(function(response) {
-          resolve(response.body);
+          if (response.ok) {
+            resolve(response.body);
+          } else {
+            reject();
+          }
         });
     });
   };

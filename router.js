@@ -44,17 +44,15 @@ Router.prototype.onStateChange = function(ev) {
   });
 
   this.getProps(this.getPath()).then(
-    function(state) {
+    function(props) {
       this.app.setProps({
-        pageType: state.pageType,
-        pageData: state.pageData,
+        pageType: props.pageType,
+        pageData: props.pageData,
         locked: false,
         activePopup: null
       });
     }.bind(this),
-    function(err) {
-      logging.error(err);
-    }
+    this.errorHandler
   );
 
 };
@@ -86,6 +84,10 @@ Router.prototype.addRoute = function(name, pattern, handler) {
 
 Router.prototype.set404Route = function(handler) {
   this.handler404 = handler;
+};
+
+Router.prototype.setErrorHandler = function(handler) {
+  this.errorHandler = handler;
 };
 
 Router.prototype.getProps = function(path) {

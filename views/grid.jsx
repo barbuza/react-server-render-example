@@ -3,14 +3,15 @@
 var React = require("react");
 var Link = require("./link");
 var routes = require("../routes");
+var PropTypes = React.PropTypes;
 
 var Grid = React.createClass({
   propTypes: {
-    items: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
-        title: React.PropTypes.string.isRequired,
-        image: React.PropTypes.string.isRequired
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired
       })
     ).isRequired
   },
