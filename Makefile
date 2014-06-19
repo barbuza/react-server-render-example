@@ -1,35 +1,38 @@
 pwd := $(shell pwd)
 node_path := ${pwd}/node_modules
+bin_path := ${node_path}/.bin
 
 clean:
-	# remove bundled js
-	rm -f static/*.bundle.js
-	rm -f static/*.css
+	@rm -f static/*.bundle.js
+	@rm -f static/*.css
 
-style:
-	# compiling styles
-	NODE_PATH=${node_path} ${node_path}/.bin/stylus -u nib --import styles/helpers -o static styles/app.styl
-	NODE_PATH=${node_path} ${node_path}/.bin/autoprefixer -b "last 2 versions" static/app.css
+prod_style:
+	# compiling production styles
+	@${bin_path}/stylus -u nib -u autoprefixer-stylus --compress --import styles/helpers -o static styles/app.styl
 
-style_min: style
-	# compressing styles
-	NODE_PATH=${node_path} ${node_path}/.bin/cssmin static/app.css > static/app.min.css
+dev_style:
+	# compiling development styles
+	@${bin_path}/stylus -u nib -u autoprefixer-stylus --import styles/helpers -o static styles/app.styl
 
-dev_server: clean style
-	NODE_PATH=${node_path} NODE_ENV=development node --harmony server.js
+dev_bundle:
+	# building development bundle
+	@NODE_ENV=development ${bin_path}/webpack --hide-modules --progress -c
 
-dev: clean style
+prod_bundle:
+	# building production bundle
+	@NODE_ENV=production ${bin_path}/webpack --hide-modules --optimize-minimize --optimize-occurence-order --optimize-dedupe
+
+dev_server: clean dev_style dev_bundle
 	# starting dev server
-	NODE_PATH=${node_path} NODE_ENV=development ${node_path}/.bin/supervisor -e js,jsx,styl -x make dev_server
+	@-NODE_ENV=development node --harmony server.js
 
-bundle: clean
-	# bundling js app
-	NODE_ENV=production NODE_PATH=${node_path} ${node_path}/.bin/webpack
+dev: clean
+	@NODE_ENV=development ${bin_path}/supervisor -e js,jsx,styl -x make dev_server
 
-prod: bundle style_min
+prod: clean prod_style prod_bundle
 	# starting prod server
-	NODE_ENV=production NODE_PATH=${node_path} node --harmony server.js
+	@NODE_ENV=production node --harmony server.js
 
 lint:
-	-make bundle | grep "Side effects" | grep -v "react/lib"
-	NODE_PATH=${node_path} ${node_path}/.bin/jsxhint *.js views/*.jsx components/*.jsx actions/*.js
+	# checking javascripts
+	@${bin_path}/jsxhint *.js views/*.jsx components/*.jsx actions/*.js

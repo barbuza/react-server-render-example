@@ -1,21 +1,21 @@
 {
   "name": "node-render",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
+  "repository": "http://github.com/barbuza/react-server-render-example",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "make bundle style_min"
+    "test": "make lint",
+    "postinstall": "make clean prod_style prod_bundle"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Victor Kotseruba <barbuzaster@gmail.com>",
+  "license": "MIT",
   "engines": {
     "node": "0.10.28",
     "npm": "1.4.15"
   },
   "dependencies": {
-    "autoprefixer": "^1.2.0",
-    "cssmin": "^0.4.1",
+    "autoprefixer-stylus": "^0.1.0",
     "envify-loader": "^0.1.0",
     "es6-promise": "~1.0.0",
     "express": "^4.2.0",
@@ -29,7 +29,6 @@
     "superagent": "^0.18.0",
     "supervisor": "^0.6.0",
     "webpack": "^1.1.10",
-    "webpack-dev-middleware": "^1.0.5",
     "xregexp": "^2.0.0"
   }
 }

@@ -1,7 +1,5 @@
 var express = require("express");
 var React = require("react");
-var webpack = require("webpack");
-var webpackDevMiddleware = require("webpack-dev-middleware");
 var fs = require("fs");
 var morgan = require("morgan");
 var crypto = require("crypto");
@@ -12,10 +10,6 @@ var app = express();
 var ReactApp = require("./views/app");
 var ReactRouter = require("./routes");
 var Const = require("./const");
-
-if (process.env.NODE_ENV != "production") {
-  app.use(webpackDevMiddleware(webpack(require("./webpack.config"))));
-}
 
 app.use(express.static(__dirname + "/static"));
 
@@ -35,7 +29,6 @@ if (process.env.NODE_ENV === "production") {
 
 var cssPath = "/app.css";
 if (process.env.NODE_ENV === "production") {
-  cssPath = "/app.min.css";
   var cssBundleHash = crypto.createHash("sha1");
   cssBundleHash.update(fs.readFileSync(__dirname + "/static" + cssPath));
   cssPath += "?" + cssBundleHash.digest("hex");
