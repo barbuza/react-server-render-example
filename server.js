@@ -105,6 +105,7 @@ app.get("/*", function(req, res, next) {
   }, next);
 });
 
-app.listen(8080, function() {
-  console.log("serving on port 8080");
+var port = parseInt(process.env.PORT || 8080);
+app.listen(port, function() {
+  console.log("serving on port " + port);
 });
