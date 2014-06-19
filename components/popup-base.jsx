@@ -2,10 +2,12 @@
 
 var React = require("react");
 var dispatch = require("../dispatch");
-var EventListener = require("react/lib/EventListener");
 var cx = require("react/lib/cx");
+var DomMixin = require("../utils/dom-mixin");
 
 var PopupBase = React.createClass({
+
+  mixins: [DomMixin],
 
   propTypes: {
     children: React.PropTypes.component.isRequired
@@ -24,10 +26,13 @@ var PopupBase = React.createClass({
   },
 
   componentDidMount: function() {
-    setTimeout(this.showPopup, 0);
-    var closeBtn = this.getDOMNode().querySelector("[data-role='close']");
+    this.setStateDefer({
+      visible: true,
+      dispose: false
+    });
+    var closeBtn = this.querySelector("[data-role='close']");
     if (closeBtn) {
-      var listener = EventListener.listen(closeBtn, "click", this.closePopup);
+      var listener = this.addEventListener(closeBtn, "click", this.closePopup);
       this.setState({
         listener: listener
       });
@@ -51,14 +56,7 @@ var PopupBase = React.createClass({
       visible: false,
       dispose: true
     });
-    setTimeout(() => dispatch.emit("hidePopup"), 500);
-  },
-
-  showPopup: function() {
-    this.setState({
-      visible: true,
-      dispose: false
-    });
+    dispatch.emitAfter(500, "hidePopup");
   },
 
   render: function() {

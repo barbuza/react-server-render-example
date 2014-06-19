@@ -34,4 +34,4 @@ prod: clean prod_style prod_bundle
 
 lint:
 	# checking javascripts
-	@${bin_path}/jsxhint *.js views/*.jsx components/*.jsx actions/*.js
+	@${bin_path}/jsxhint *.js views/*.jsx components/*.jsx actions/*.js utils/*.js
