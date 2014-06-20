@@ -5,7 +5,8 @@ var Link = require("./link");
 var routes = require("../routes");
 var PropTypes = React.PropTypes;
 var cx = require("react/lib/cx");
-var shallowEqual = require("react/lib/shallowEqual");
+var DomMixin = require("../utils/dom-mixin");
+var _ = require("lodash");
 
 var itemShape = {
   id: PropTypes.number.isRequired,
@@ -49,6 +50,7 @@ var RateHelper = React.createClass({
 });
 
 var GridItem = React.createClass({
+  mixins: [DomMixin],
   propTypes: itemShape,
   getInitialState: function() {
     return {
@@ -56,28 +58,13 @@ var GridItem = React.createClass({
     };
   },
   onMouseLeave: function() {
-    var hideTimeout = setTimeout(this.hideRateHelper, 300);
-    this.setState({
-      hideTimeout: hideTimeout
-    });
-  },
-  hideRateHelper: function() {
-    if (this.isMounted()) {
-      this.setState({
-        showRateHelper: false
-      });
-    }
+    this.setStateTimeout("hideTimeout", 300, this.stateSetter({showRateHelper: false}));
   },
   onMouseEnter: function() {
     this.setState({
       showRateHelper: true
     });
-    if (this.state.hideTimeout) {
-      clearTimeout(this.state.hideTimeout);
-      this.setState({
-        hideTimeout: null
-      });
-    }
+    this.clearStateTimeout("hideTimeout");
   },
   componentWillUnmount: function() {
     if (this.state.hideTimeout) {
@@ -85,7 +72,7 @@ var GridItem = React.createClass({
     }
   },
   shouldComponentUpdate: function(nextProps, nextState) {
-    return !shallowEqual(this.props, nextProps) || this.state.showRateHelper !== nextState.showRateHelper;
+    return !this.equalObjects(this.props, nextProps) || this.state.showRateHelper !== nextState.showRateHelper;
   },
   render: function() {
     var rateHelper = this.state.showRateHelper ? <RateHelper /> : null;
@@ -107,8 +94,9 @@ var Grid = React.createClass({
     ).isRequired
   },
   render: function() {
-    var items = this.props.items.map((item, index) => <GridItem title={item.title} id={item.id}
-                                                                image={item.image} key={index} />);
+    var items = _.map(this.props.items,
+                      (item, index) => <GridItem title={item.title} id={item.id}
+                                                 image={item.image} key={index} />);
     return (
       <div className="grid">
         <h1>grid sample</h1>

@@ -22,7 +22,7 @@ var PopupBase = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
-    return nextState.visible !== this.state.visible || nextState.dispose !== this.state.dispose;
+    return !this.equalObjects(this.state, nextState, "visible", "dispose");
   },
 
   componentDidMount: function() {

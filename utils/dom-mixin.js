@@ -1,16 +1,15 @@
-
 var EventListener = require("react/lib/EventListener");
+var shallowEqual = require("react/lib/shallowEqual");
+var _ = require("lodash");
 
 var DomMixin = {
 
-  querySelector: function() {
-    var node = this.getDOMNode();
-    return node.querySelector.apply(node, Array.prototype.slice.call(arguments));
+  querySelector: function(selector) {
+    return this.getDOMNode().querySelector(selector);
   },
 
-  querySelectorAll: function() {
-    var node = this.getDOMNode();
-    return node.querySelectorAll.apply(node, Array.prototype.slice.call(arguments));    
+  querySelectorAll: function(selector) {
+    return this.getDOMNode().querySelectorAll(selector);
   },
 
   addEventListener: function(target, eventName, handler) {
@@ -18,9 +17,48 @@ var DomMixin = {
   },
 
   setStateDefer: function(update) {
-    return setTimeout((function() {
+    var self = this;
+    _.defer(function() {
+      if (self.isMounted()) {
+        self.setState(update);
+      }
+    });
+  },
+
+  equalObjects: function(a, b) {
+    var keys = Array.prototype.slice.call(arguments, 2);
+    if (! keys.length) {
+      return shallowEqual(a, b);
+    }
+    return shallowEqual(_.pick(a, keys), _.pick(b, keys));
+  },
+
+  setStateTimeout: function(stateVarName, duration, func) {
+    var update = {};
+    update[stateVarName] = setTimeout(func, duration);
+    this.setState(update);
+  },
+
+  clearStateTimeout: function(stateVarName) {
+    if (this.state[stateVarName]) {
+      clearTimeout(this.state[stateVarName]);
+      var update = {};
+      update[stateVarName] = null;
       this.setState(update);
-    }).bind(this), 0);
+    }
+  },
+
+  safeSetState: function(update) {
+    if (this.isMounted()) {
+      this.setState(update);
+    }
+  },
+
+  stateSetter: function(update) {
+    var self = this;
+    return function() {
+      self.safeSetState(update);
+    }
   }
 
 };
