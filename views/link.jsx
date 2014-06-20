@@ -3,6 +3,7 @@
 var React = require("react");
 var PropTypes = React.PropTypes;
 var dispatch = require("../dispatch");
+var isMobile = require("../utils/mobile");
 
 var Link = React.createClass({
   propTypes: {
@@ -16,8 +17,16 @@ var Link = React.createClass({
       dispatch.emit("navigate", this.props.href);
     }
   },
+  preventDefault: function(e) {
+    e.preventDefault();
+  },
   render: function() {
-    return this.transferPropsTo(React.DOM.a({onClick: this.onClick}, this.props.children));
+    if (isMobile()) {
+      return this.transferPropsTo(<a onClick={this.preventDefault}
+                                     onTouchStart={this.onClick}>{this.props.children}</a>);
+    } else {
+      return this.transferPropsTo(<a onClick={this.onClick}>{this.props.children}</a>);
+    }
   }
 });
 

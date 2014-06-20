@@ -4,6 +4,7 @@ var React = require("react");
 var dispatch = require("../dispatch");
 var cx = require("react/lib/cx");
 var DomMixin = require("../utils/dom-mixin");
+var isMobile = require("../utils/mobile");
 
 var PopupBase = React.createClass({
 
@@ -32,7 +33,8 @@ var PopupBase = React.createClass({
     });
     var closeBtn = this.querySelector("[data-role='close']");
     if (closeBtn) {
-      var listener = this.addEventListener(closeBtn, "click", this.closePopup);
+      var eventName = isMobile() ? "touchstart" : "click";
+      var listener = this.addEventListener(closeBtn, eventName, this.closePopup);
       this.setState({
         listener: listener
       });

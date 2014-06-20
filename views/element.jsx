@@ -2,6 +2,7 @@
 
 var React = require("react");
 var dispatch = require("../dispatch");
+var Clickable = require("../components/clickable");
 var Popup = require("./popup");
 var PropTypes = React.PropTypes;
 
@@ -28,9 +29,9 @@ var Element = React.createClass({
   render: function() {
     return (
       <div className="element">
-        <h1 onClick={this.titleClickHandler}>{this.props.title}</h1>
+        <Clickable clickHandler={this.titleClickHandler} component={React.DOM.h1}>{this.props.title}</Clickable>
         <img src={this.props.image} />
-        <div onClick={this.appendText} className="elementDescription">{this.state.desc}</div>
+        <Clickable clickHandler={this.appendText} component={React.DOM.div} className="elementDescription">{this.state.desc}</Clickable>
       </div>
     );
   }

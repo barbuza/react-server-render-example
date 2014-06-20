@@ -7,6 +7,7 @@ var PropTypes = React.PropTypes;
 var cx = require("react/lib/cx");
 var DomMixin = require("../utils/dom-mixin");
 var _ = require("lodash");
+var isMobile = require("../utils/mobile.js");
 
 var itemShape = {
   id: PropTypes.number.isRequired,
@@ -54,15 +55,26 @@ var GridItem = React.createClass({
   propTypes: itemShape,
   getInitialState: function() {
     return {
-      showRateHelper: false
+      showRateHelper: false,
+      expanded: false
     };
   },
   onMouseLeave: function() {
+    if (isMobile()) {
+      return;
+    }
+    this.setState({
+      expanded: false
+    });
     this.setStateTimeout("hideTimeout", 300, this.stateSetter({showRateHelper: false}));
   },
   onMouseEnter: function() {
+    if (isMobile()) {
+      return;
+    }
     this.setState({
-      showRateHelper: true
+      showRateHelper: true,
+      expanded: true
     });
     this.clearStateTimeout("hideTimeout");
   },
@@ -72,13 +84,18 @@ var GridItem = React.createClass({
     }
   },
   shouldComponentUpdate: function(nextProps, nextState) {
-    return !this.equalObjects(this.props, nextProps) || this.state.showRateHelper !== nextState.showRateHelper;
+    return !this.equalObjects(this.props, nextProps) ||
+           !this.equalObjects(this.state, nextState, "showRateHelper", "expanded");
   },
   render: function() {
     var rateHelper = this.state.showRateHelper ? <RateHelper /> : null;
+    var classes = cx({
+      gridItem: true,
+      gridItemExpanded: this.state.expanded
+    });
     return (
       <Link href={routes.reverse("element", {id: this.props.id})}
-            className="gridItem" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+            className={classes} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
         <img className="gridItemImage" src={this.props.image} />
         {rateHelper}
         <div className="gridItemTitle">{this.props.title}</div>
