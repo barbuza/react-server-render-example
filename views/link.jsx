@@ -2,6 +2,7 @@
 
 var React = require("react");
 var PropTypes = React.PropTypes;
+var dispatch = require("../dispatch");
 
 var Link = React.createClass({
   propTypes: {
@@ -11,11 +12,8 @@ var Link = React.createClass({
   onClick: function(e) {
     if (typeof history.pushState === "function") {
       e.preventDefault();
-      window.history.pushState({}, "", this.props.href);
-      var ev = document.createEvent("HTMLEvents");
-      ev.initEvent("popstate", true, true);
-      ev.eventName = "popstate";
-      window.dispatchEvent(ev);
+      window.history.pushState(null, null, this.props.href);
+      dispatch.emit("navigate", this.props.href);
     }
   },
   render: function() {

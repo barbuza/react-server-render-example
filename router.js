@@ -23,26 +23,24 @@ Route.prototype.reverse = function(params) {
 };
 
 var Router = function() {
-  this.path = undefined;
+  this.path = typeof window === "undefined" ? null : window.location.pathname;
   this.routes = [];
   this.namedRoutes = {};
 };
 
-Router.prototype.getPath = function() {
-  return this.path || window.location.pathname;
-};
+Router.prototype.navigate = function(path) {
 
-Router.prototype.onStateChange = function(ev) {
-  if (window.location.pathname === this.path) return;
+  if (path === this.path) {
+    return;
+  }
 
-  var path = window.location.pathname;
   this.path = path;
 
   this.app.setProps({
     locked: true
   });
 
-  this.getProps(this.getPath()).then(
+  this.getProps(this.path).then(
     function(props) {
       this.app.setProps({
         pageType: props.pageType,
@@ -58,9 +56,23 @@ Router.prototype.onStateChange = function(ev) {
 
 Router.prototype.attach = function(app) {
   this.app = app;
-  window.addEventListener("popstate", this.onStateChange.bind(this));
-  dispatch.on("showPopup", this.showPopup.bind(this));
-  dispatch.on("hidePopup", this.hidePopup.bind(this));
+  var self = this;
+
+  window.addEventListener("popstate", function() {
+    dispatch.emit("navigate", window.location.pathname);
+  });
+
+  dispatch.on("navigate", function(path) {
+    self.navigate(path);
+  });
+
+  dispatch.on("showPopup", function(popup) {
+    self.showPopup(popup);
+  });
+
+  dispatch.on("hidePopup", function() {
+    self.hidePopup();
+  });
 };
 
 Router.prototype.showPopup = function(popup) {
