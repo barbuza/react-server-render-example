@@ -3,6 +3,7 @@ var React = require("react");
 var fs = require("fs");
 var morgan = require("morgan");
 var crypto = require("crypto");
+var compression = require("compression");
 
 require("node-jsx").install({extension: ".jsx", harmony: true});
 
@@ -11,6 +12,7 @@ var ReactApp = require("./views/app");
 var ReactRouter = require("./routes");
 var Const = require("./const");
 
+app.use(compression());
 app.use(express.static(__dirname + "/static"));
 
 app.use(morgan("short"));
