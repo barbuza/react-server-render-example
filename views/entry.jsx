@@ -9,7 +9,7 @@ if (isMobile()) {
   React.initializeTouchEvents(true);
 }
 
-var logging = require("../logging");
+var logging = require("../utils/logging");
 logging.info("app starting");
 
 var App = require("./app");

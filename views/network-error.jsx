@@ -3,7 +3,7 @@
 var React = require("react");
 var PopupBase = require("../components/popup-base");
 var dispatch = require("../dispatch");
-var logging = require("../logging");
+var logging = require("../utils/logging");
 
 var NetworkErrorPopup = React.createClass({
   render: function() {

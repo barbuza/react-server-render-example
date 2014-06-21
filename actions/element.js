@@ -1,5 +1,5 @@
 var baseAction = require("./base");
-var remote = require("../remote");
+var remote = require("../utils/remote");
 var Const = require("../const");
 
 module.exports = baseAction(Const.ELEMENT, true, function(resolve, reject, pathData) {

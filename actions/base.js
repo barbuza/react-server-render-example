@@ -1,5 +1,5 @@
 var Promise = require("es6-promise").Promise;
-var logging = require("../logging");
+var logging = require("../utils/logging");
 
 var browserCache = {};
 
