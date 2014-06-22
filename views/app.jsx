@@ -6,7 +6,7 @@ var Grid = require("./grid");
 var Element = require("./element");
 var Preloader = require("../components/preloader");
 var NotFound = require("./not-found");
-var dispatch = require("../dispatch");
+var dispatch = require("../utils/dispatch");
 
 var PropTypes = React.PropTypes;
 

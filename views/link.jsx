@@ -2,7 +2,7 @@
 
 var React = require("react");
 var PropTypes = React.PropTypes;
-var dispatch = require("../dispatch");
+var dispatch = require("../utils/dispatch");
 var isMobile = require("../utils/mobile");
 
 var Link = React.createClass({
