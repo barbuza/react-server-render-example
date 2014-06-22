@@ -6,6 +6,7 @@ var Grid = require("./grid");
 var Element = require("./element");
 var Preloader = require("../components/preloader");
 var NotFound = require("./not-found");
+var dispatch = require("../dispatch");
 
 var PropTypes = React.PropTypes;
 
@@ -43,8 +44,31 @@ var App = React.createClass({
     cssPath: PropTypes.string.isRequired,
     pageType: PropTypes.string.isRequired,
     pageData: PropTypes.object.isRequired,
-    locked: PropTypes.bool.isRequired,
-    activePopup: PropTypes.renderable
+    locked: PropTypes.bool.isRequired
+  },
+
+  getInitialState: function() {
+    return {
+      activePopup: null
+    };
+  },
+
+  showPopup: function(popup) {
+    this.setState({
+      activePopup: popup
+    });
+  },
+
+  hidePopup: function() {
+    this.setState({
+      activePopup: null
+    });
+  },
+
+  componentWillMount: function() {
+    dispatch.on("showPopup", this.showPopup);
+    dispatch.on("hidePopup", this.hidePopup);
+    dispatch.on("navigate", this.hidePopup);
   },
 
   render: function() {
@@ -97,7 +121,7 @@ var App = React.createClass({
             {Page(this.props.pageData)}
           </section>
           <footer></footer>
-          {this.props.activePopup ? this.props.activePopup : null}
+          {this.state.activePopup ? this.state.activePopup : null}
           {lock}
           <script src={this.props.commonBundlePath} />
           <script dangerouslySetInnerHTML={{__html: injectConfig}} />

@@ -96,30 +96,6 @@ Router.prototype.attach = function(app) {
     self.navigate(path);
   });
 
-  dispatch.on("showPopup", function(popup) {
-    self.showPopup(popup);
-  });
-
-  dispatch.on("hidePopup", function() {
-    self.hidePopup();
-  });
-};
-
-Router.prototype.showPopup = function(popup) {
-  invariant(
-    ReactComponent.isValidComponent(popup),
-    "Router#showPopup arg should be React component, %s given",
-    typeof popup
-  );
-  this.app.setProps({
-    activePopup: popup
-  });
-};
-
-Router.prototype.hidePopup = function() {
-  this.app.setProps({
-    activePopup: null
-  });
 };
 
 Router.prototype.addRoute = function(name, pattern, handler) {
