@@ -15,10 +15,26 @@ var Clickable = React.createClass({
       component: React.DOM.div
     };
   },
+  clickHandler: function(e) {
+    this.cancelEvent(e);
+    this.props.clickHandler(e);
+  },
+  cancelEvent: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  },
   render: function() {
-    var eventName = isMobile() ? "onTouchStart" : "onClick";
-    var props = {};
-    props[eventName] = this.props.clickHandler;
+    var props;
+    if (isMobile()) {
+      props = {
+        onTouchStart: this.clickHandler,
+        onClick: this.cancelEvent
+      };
+    } else {
+      props = {
+        onClick: this.clickHandler
+      };
+    }
     return this.transferPropsTo(this.props.component(props, this.props.children));
   }
 });
