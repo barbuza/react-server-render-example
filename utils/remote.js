@@ -33,13 +33,11 @@ if (typeof window === "undefined") {
       superagent
         .get(uri)
         .end(function(response) {
-          setTimeout(function() {
-            if (response.ok) {
-              resolve(response.body);
-            } else {
-              reject();
-            }
-          }, 1000);
+          if (response.ok) {
+            resolve(response.body);
+          } else {
+            reject();
+          }
         });
     });
   };
