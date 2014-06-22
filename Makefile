@@ -35,3 +35,7 @@ prod: clean prod_style prod_bundle
 lint:
 	# checking javascripts
 	@${bin_path}/jsxhint *.js views/*.jsx components/*.jsx actions/*.js utils/*.js
+
+test:
+	# runing jasmine tests
+	@${bin_path}/jasmine-node spec
