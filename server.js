@@ -19,22 +19,19 @@ app.use(morgan("short"));
 
 var commonBundlePath = "/common.bundle.js";
 var entryBundlePath = "/entry.bundle.js";
-if (process.env.NODE_ENV === "production") {
-  var bundleHash = crypto.createHash("sha1");
-  bundleHash.update(fs.readFileSync(__dirname + "/static" + commonBundlePath));
-  commonBundlePath += "?" + bundleHash.digest("hex");
+var bundleHash = crypto.createHash("sha1");
+bundleHash.update(fs.readFileSync(__dirname + "/static" + commonBundlePath));
+commonBundlePath += "?" + bundleHash.digest("hex");
 
-  bundleHash = crypto.createHash("sha1");
-  bundleHash.update(fs.readFileSync(__dirname + "/static" + entryBundlePath));
-  entryBundlePath += "?" + bundleHash.digest("hex");
-}
+bundleHash = crypto.createHash("sha1");
+bundleHash.update(fs.readFileSync(__dirname + "/static" + entryBundlePath));
+entryBundlePath += "?" + bundleHash.digest("hex");
 
 var cssPath = "/app.css";
-if (process.env.NODE_ENV === "production") {
-  var cssBundleHash = crypto.createHash("sha1");
-  cssBundleHash.update(fs.readFileSync(__dirname + "/static" + cssPath));
-  cssPath += "?" + cssBundleHash.digest("hex");
-}
+var cssBundleHash = crypto.createHash("sha1");
+cssBundleHash.update(fs.readFileSync(__dirname + "/static" + cssPath));
+cssPath += "?" + cssBundleHash.digest("hex");
+
 
 app.get("/riak/*", function(req, res, next) {
   if (req.path === "/riak/test/grid") {
@@ -58,7 +55,7 @@ app.get("/riak/*", function(req, res, next) {
       id: 1,
       title: "Форс-Мажоры",
       image: "http://st7.imhonet.ru/element/7e/b2/7eb2a71bfa6e8a266877ae228325e4d2.jpg" ,
-      desc: "Популярный американский сериал «Форс-мажоры» (Suits) вышел в прокат в 2011 году. Его драматический сюжет рассказывает историю юриста-самоучки Майка Росса, который выдавал себя за выпускника Гарварда. Его нанимают к одному из лучших адвокатов Нью-Йорка." 
+      desc: "Популярный американский сериал «Форс-мажоры» (Suits) вышел в прокат в 2011 году. Его драматический сюжет рассказывает историю юриста-самоучки Майка Росса, который выдавал себя за выпускника Гарварда. Его нанимают к одному из лучших адвокатов Нью-Йорка."
     });
   } else if (req.path === "/riak/test/element-2") {
     res.send({
