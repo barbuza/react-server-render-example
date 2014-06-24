@@ -1,10 +1,8 @@
 var EventListener = require("react/lib/EventListener");
 var shallowEqual = require("react/lib/shallowEqual");
-var routes = require("../routes");
-
 var _ = require("lodash");
 
-var BaseMixin = {
+var DomMixin = {
 
   querySelector: function(selector) {
     return this.getDOMNode().querySelector(selector);
@@ -61,12 +59,8 @@ var BaseMixin = {
     return function() {
       self.safeSetState(update);
     }
-  },
-
-  reverseUrl: function(name, args) {
-    return routes.reverse(name, args);
   }
 
 };
 
-module.exports = BaseMixin;
+module.exports = DomMixin;

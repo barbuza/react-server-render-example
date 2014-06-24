@@ -2,9 +2,10 @@
 
 var React = require("react");
 var Link = require("./link");
+var routes = require("../routes");
 var PropTypes = React.PropTypes;
 var cx = require("react/lib/cx");
-var BaseMixin = require("../utils/base-mixin");
+var DomMixin = require("../utils/dom-mixin");
 var _ = require("lodash");
 var isMobile = require("../utils/mobile.js");
 
@@ -50,7 +51,7 @@ var RateHelper = React.createClass({
 });
 
 var GridItem = React.createClass({
-  mixins: [BaseMixin],
+  mixins: [DomMixin],
   propTypes: itemShape,
   getInitialState: function() {
     return {
@@ -93,7 +94,7 @@ var GridItem = React.createClass({
       gridItemExpanded: this.state.expanded
     });
     return (
-      <Link href={this.reverseUrl("element", {id: this.props.id})}
+      <Link href={routes.reverse("element", {id: this.props.id})}
             className={classes} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
         <img className="gridItemImage" src={this.props.image} />
         {rateHelper}

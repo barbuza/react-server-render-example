@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require("react");
-var dispatch = require("../utils/dispatch");
+var dispatch = require("../dispatch");
 var Clickable = require("../components/clickable");
 var Popup = require("./popup");
 var PropTypes = React.PropTypes;

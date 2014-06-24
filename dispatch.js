@@ -14,4 +14,4 @@ Dispatcher.prototype.emitAfter = function(duration) {
   }, duration);
 };
 
-module.exports = Dispatcher;
+module.exports = new Dispatcher();

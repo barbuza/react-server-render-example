@@ -1,7 +1,7 @@
-var Router = require("../utils/router");
+var Router = require("../router");
 
 describe("Router", function() {
-
+  
   var router = new Router();
   function addRoute(pattern, name) {
     router.addRoute(name, pattern, function() {

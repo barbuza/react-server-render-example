@@ -1,14 +1,14 @@
 /** @jsx React.DOM */
 
 var React = require("react");
-var dispatch = require("../utils/dispatch");
+var dispatch = require("../dispatch");
 var cx = require("react/lib/cx");
-var BaseMixin = require("../utils/base-mixin");
+var DomMixin = require("../utils/dom-mixin");
 var isMobile = require("../utils/mobile");
 
 var PopupBase = React.createClass({
 
-  mixins: [BaseMixin],
+  mixins: [DomMixin],
 
   propTypes: {
     children: React.PropTypes.component.isRequired
