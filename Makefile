@@ -26,7 +26,7 @@ dev_server: clean dev_style dev_bundle
 	@-NODE_ENV=development node --harmony server.js
 
 dev: clean
-	@NODE_ENV=development ${bin_path}/supervisor -e js,jsx,styl -x make dev_server
+	@NODE_ENV=development ${bin_path}/supervisor -i tests -e js,jsx,styl -x make dev_server
 
 prod: clean prod_style prod_bundle
 	# starting prod server
@@ -37,5 +37,5 @@ lint:
 	@${bin_path}/jsxhint *.js views/*.jsx components/*.jsx actions/*.js utils/*.js
 
 test:
-	# runing jasmine tests
-	@${bin_path}/jasmine-node spec
+	# runing mocha tests on selenium
+	@${bin_path}/mocha -R list -r chai --compilers coffee:coffee-script/register tests/*_spec.js tests/*_spec.coffee
