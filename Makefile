@@ -38,4 +38,6 @@ lint:
 
 test:
 	# runing mocha tests on selenium
-	@${bin_path}/mocha -R list -r chai --compilers coffee:coffee-script/register tests/*_spec.js tests/*_spec.coffee
+	@${bin_path}/mocha -t 100000 -R spec -r chai --compilers coffee:coffee-script/register
+
+.PHONY: test

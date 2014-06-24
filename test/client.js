@@ -12,11 +12,15 @@ chai.use(require("chai-as-promised"));
 
 module.exports = {
   test: require("selenium-webdriver/testing"),
-  makeDriver: function() {
+  makeDriver: function(url) {
     var driver = new webdriver.Builder()
           .withCapabilities(webdriver.Capabilities.chrome())
           .build();
+
     chai.use(chaiWebdriver(driver));
+    if (typeof url === "string") {
+      driver.get(url);
+    }
     return {
       driver: driver,
       $: sizzle(driver),
